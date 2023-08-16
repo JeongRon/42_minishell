@@ -1,0 +1,9 @@
+{
+	"files.associations": {
+		"types.h": "c",
+		"sstream": "c",
+		"ratio": "c",
+		"libft.h": "c",
+		"minishell.h": "c"
+	}
+}
