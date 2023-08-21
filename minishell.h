@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:35:51 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/08/05 15:49:35 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/08/21 22:45:27 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,14 @@ typedef struct s_minishell
 
 int		main(int ac, char *av[], char **envp);
 int		check_null(char **str, int count);
+int		f_q(char str, int *quote);
+char	*del_quote(char *str);
+char	*find_path(char *str, char **envp);
+char	*quote_conversion(char *str, char**envp);
 char	**continue_quote(char *str);
 char	**ft_split_quote(char const *str, char c, int quote);
-void	error(int flag);
+void	error(char *str);
+void	make_token(t_minishell *minishell, char **str_split_pipe, char **envp);
+void	parse_input(t_minishell *minishell, char *str, char **envp);
 void	*ft_malloc(size_t size);
-void	make_token(t_minishell *minishell, char **temp2);
-void	parse_input(t_minishell *minishell, char *str);
-
 #endif

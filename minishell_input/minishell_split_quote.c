@@ -6,13 +6,13 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 16:07:26 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/08/04 16:56:25 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/08/21 22:45:24 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	f_q(char str, int *quote)
+int	f_q(char str, int *quote)
 {
 	if (str == '\'')
 	{
@@ -97,7 +97,7 @@ char	**ft_split_quote(char const *str, char c, int quote)
 	i = 0;
 	while (*str != 0)
 	{
-		while ((*str != 0 && *str == c && f_q(str[i], &quote)) || quote != 0)
+		while ((*str != 0 && *str == c && f_q(*str, &quote)) || quote != 0)
 			str++;
 		if (*str != 0)
 		{
@@ -105,7 +105,7 @@ char	**ft_split_quote(char const *str, char c, int quote)
 			if (check_null(strings, i++))
 				return (NULL);
 		}
-		while ((*str && !(*str == c) && f_q(str[i], &quote)) || quote != 0)
+		while ((*str && !(*str == c) && f_q(*str, &quote)) || quote != 0)
 			str++;
 	}
 	strings[i] = 0;

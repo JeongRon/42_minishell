@@ -6,7 +6,7 @@
 #    By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/13 17:36:01 by dongmiki          #+#    #+#              #
-#    Updated: 2023/08/04 17:02:49 by dongmiki         ###   ########.fr        #
+#    Updated: 2023/08/21 22:45:24 by dongmiki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ SRCS = minishell.c \
 		minishell_input/minishell_input.c \
 		minishell_input/minishell_input_token.c \
 		minishell_input/minishell_input_quote.c \
+		minishell_input/minishell_input_utils.c \
 		minishell_input/minishell_split_quote.c \
-		minishell_input/minishell_split_quote2.c \
 
 
 OBJS = $(SRCS:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:40:13 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/07/30 19:51:06 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/08/21 22:45:25 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	*ft_malloc(size_t size)
 
 	temp = malloc(size);
 	if (!temp)
-		error(0);//이런식으로 나가면 상황에 따라 leaks이 날 수도 있음
+		error("bash: system error(malloc fail)");
+	//이런식으로 나가면 상황에 따라 leaks이 날 수도 있음
 	return (temp);
 }

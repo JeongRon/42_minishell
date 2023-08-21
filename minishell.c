@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:19:53 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/08/10 19:48:27 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/08/21 22:46:12 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,40 +21,17 @@ int	main(int ac, char **av, char **envp)
 
 	if (ac != 1 || !av || !envp)
 		error(0);
-	//exit나
-
 	minishell = (t_minishell *)ft_malloc(sizeof(t_minishell));
 	while (1)
 	{
-		//읽고(',"의 경우 quote>로 쭉 읽기)
 		input = readline("minishell$> ");
+		if (!input)
+			continue;
 		add_history(input);
-		parse_input(minishell, input);
+		//여기서 포크???
+		parse_input(minishell, input, envp);
 
-		int i = 0;
-		while (i < minishell->token_num)
-		{
-			t_token temp = (minishell->token)[i];
-			int j = -1;
-			printf("token[%d]\ncmd:  ", i);
-			while (temp.cmd[++j])
-			{
-				printf("%s, ", temp.cmd[j]);
-			}
-			printf("\nredirection\n");
-			j = -1;
-			while (temp.redirection[++j])
-			{
-				int k = -1;
-				while (temp.redirection[j][++k])
-					printf("%s, ", temp.redirection[j][k]);
-				printf("\n");
-			}
-			i++;
-		}
-
-		printf("\nFinish Pasing\n");
-
+		//여기서 부터 실행 부
 		
 		//나누고
 		//처리하고
@@ -66,7 +43,6 @@ int	main(int ac, char **av, char **envp)
 	return (0);
 }
 //해야할일 
-// -1. cat<input 이런거 리더랙션 다 읽어야함
-// 0. \, ; 처리->해석하지 않아야 합니다.... "안 닫히는 부분도 하지 않아야 합니다...
-// 1. $처리하기
+// 1. $처리하기->끝??->token에 '\0'으로 남기는 하는데 사소해..?
 // 2. shell 만들고 연결..?
+// 3. signal
