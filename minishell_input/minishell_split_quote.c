@@ -6,11 +6,21 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 16:07:26 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/08/21 22:45:24 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/08/22 14:51:01 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+** quote를 판단하는 함수
+** 현제 char를 읽어서 quote변수를 통해 현재 quote안에 있는지 아닌지 판단해준다.
+** int
+** 항상 참을 return함
+**
+** @param		str		문자열 중에서 현제 판단할 문자
+** @param		quote	인자로 받아서 문자열에서 읽고 있는 곳을 판단해서 값을 바꾸어 준다.
+*/
 
 int	f_q(char str, int *quote)
 {
@@ -82,6 +92,18 @@ static	char	*ft_word(char *str, char c)
 	word[i] = '\0';
 	return (word);
 }
+
+/*
+** quote를 판단하는 함수
+** 현제 문자열을 읽어서 quote를 제외한 부분들을 c로 나누어서 이중 char **을 만든다.
+** char **
+** 실패시 NULL을 반환
+** 성공시 char **을 반환
+**
+** @param		str		문자열
+** @param		c		구분자
+** @param		quote	quote안에 있는 구분자는 구분자로 사용되지 않도록 하는 판단 변수
+*/
 
 char	**ft_split_quote(char const *str, char c, int quote)
 {

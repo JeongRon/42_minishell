@@ -6,11 +6,20 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 20:35:30 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/08/21 22:45:21 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/08/22 16:20:45 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+** 받은 문자열을 확인하면서 quote가 제대로 닫혔는지 확인하는 함수.
+** void
+**
+** @param		str		입력받은 명령어(문자열)
+** @param		i		문자열의 시작 위치 default(0)
+** @param		quote	quote가 제대로 닫혔는지 확인해주는 flag
+*/
 
 static void	find_quote(char *str, int i, int *quote)
 {
@@ -33,7 +42,16 @@ static void	find_quote(char *str, int i, int *quote)
 	}
 }
 
-char	*distinguish_redrection(char *str)
+/*
+** str에 있는 redirection을 구분해서 ' '으로 구분해주는 함수
+** char *
+** 나누어진 문자열을 만들어서 리턴
+**
+** @param		str		입력받은 명령어(문자열)
+** @value		flag	redirection이 중복되어서 나오는지 확인하는 변수
+*/
+
+static char	*distinguish_redirection(char *str)
 {
 	int		i;
 	int		j;
@@ -44,7 +62,7 @@ char	*distinguish_redrection(char *str)
 	i = -1;
 	j = 0;
 	quote = 0;
-	flag = 0;//redirection이 중복되어서 나오는가
+	flag = 0;
 	while (str[++i])
 	{
 		if (f_q(str[i], &quote) && quote != 0)
@@ -55,14 +73,10 @@ char	*distinguish_redrection(char *str)
 				error("bash: syntax error near unexpected token `>'");
 			flag = 1;
 			if (str[i + 1] && str[i + 1] == '>')
-			{
-				j += 2;
-				i++;//>>
-			}
+				i++;
 			else if (str[i + 1] && str[i + 1] == '<')
 				error("bash: syntax error near unexpected token `<'");
-			else
-				j += 2;//>
+			j += 2;
 		}
 		else if (str[i] == '<')
 		{
@@ -72,12 +86,8 @@ char	*distinguish_redrection(char *str)
 			if (str[i + 1] && str[i + 1] == '>')
 				error("bash: syntax error near unexpected token `>'");
 			else if (str[i + 1] && str[i + 1] == '<')
-			{
 				i++;
-				j += 2;//<<
-			}
-			else
-				j += 2;//<
+			j += 2;
 		}
 		else
 			flag = 0;
@@ -92,47 +102,33 @@ char	*distinguish_redrection(char *str)
 		j++;
 		if (f_q(str[i], &quote) && quote != 0)
 			temp[j] = str[i];
-		else if (str[i] == '>')
+		else if (str[i] == '>' || str[i] == '<')
 		{
 			temp[j++] = ' ';
 			temp[j] = str[i];
-			if (str[i + 1] && str[i + 1] == '>')
+			if ((str[i] == '>' && str[i + 1] && str[i + 1] == '>') || \
+			(str[i] == '<' && str[i + 1] && str[i + 1] == '<'))
 			{
-				i++;//>>
+				i++;
 				j++;
 				temp[j] = str[i];
-				j++;
-				temp[j] = ' ';
 			}
-			else
-			{
-				j++;//>	
-				temp[j] = ' ';
-			}
-		}
-		else if (str[i] == '<')
-		{
-			temp[j++] = ' ';
-			temp[j] = str[i];
-			if (str[i + 1] && str[i + 1] == '<')
-			{
-				i++;//<<
-				j++;
-				temp[j] = str[i];
-				j++;
-				temp[j] = ' ';
-			}
-			else
-			{
-				j++;//<
-				temp[j] = ' ';
-			}
+			j++;
+			temp[j] = ' ';
 		}
 		else
 			temp[j] = str[i];
 	}
 	return (temp);
 }
+
+/*
+** quote가 제대로 닫쳤는지 확인하고 redirection을 구분해주고 '|' 단위로 나누어 주는 함수
+** char **
+** '|'단위로 나누어진 이중 문자열을 리턴한다.
+**
+** @param		str		입력받은 명령어(문자열)
+*/
 
 char	**continue_quote(char *str)
 {
@@ -146,10 +142,7 @@ char	**continue_quote(char *str)
 	find_quote(str, -1, &quote);
 	if (quote)
 		error("bash: qutoe did not close");
-	//"사이에 $환경변수 찾아서 바꾸기"
-	//->env에서 매줄 =까지 같이 검사하기
-	//$후 없으면 그냥 빈줄 출력
-	div_redirect = distinguish_redrection(str);
+	div_redirect = distinguish_redirection(str);
 	free(str);
 	temp = ft_split_quote(div_redirect, '|', 0);
 	if (!temp)
