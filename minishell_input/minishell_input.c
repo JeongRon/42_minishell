@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:32:20 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/08/22 16:23:34 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/08/22 19:55:38 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,8 @@ char	*quote_conversion(char *str, char**envp)
 		if (str[i] == '$')
 		{
 			j = i + 1;
-			while (!(!(str[j]) || str[j] == ' ' || str[j] == '$'))
+			while (!(!(str[j]) || str[j] == ' ' || \
+			str[j] == '$' || str[j] == '\"'))
 				j++;
 			needle = ft_strdup_path(&str[i + 1], j - i - 1);
 			needle = find_path(needle, envp);
