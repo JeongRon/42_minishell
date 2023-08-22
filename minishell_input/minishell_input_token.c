@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 21:03:48 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/08/22 16:20:23 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/08/22 19:46:23 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,42 +52,6 @@ static void	input_cmd(t_token *token, char **str, int i, int *num)
 
 /*
 ** minishell의 token에 받은 이중 문자열 str('|'으로 나누어진)을 알맞게 분배해서 넣는 함수
-** 각각의 token에 들어간 cmd, redirection의 갯수를 샌다.
-** 길어서 2개로 나누어진 전반부
-** void
-**
-** @param		token	minishell의 token변수
-** @param		str		'|'으로 나누어진 명령어 목록
-*/
-
-static void	input_token(t_token *token, char **str)
-{
-	int	i;
-	int	num_redirect;
-	int	num_cmd;
-
-	i = -1;
-	num_redirect = 0;
-	num_cmd = 0;
-	while (str[++i])
-	{
-		if (!ft_strncmp(str[i], "<", 2))
-			num_redirect++;
-		else if (!ft_strncmp(str[i], "<<", 3))
-			num_redirect++;
-		else if (!ft_strncmp(str[i], ">", 2))
-			num_redirect++;
-		else if (!ft_strncmp(str[i], ">>", 3))
-			num_redirect++;
-		else
-			num_cmd++;
-	}
-	num_cmd -= num_redirect;
-	input_token_second(token, str, num_cmd, num_redirect);
-}
-
-/*
-** minishell의 token에 받은 이중 문자열 str('|'으로 나누어진)을 알맞게 분배해서 넣는 함수
 ** token의 cmd, redirection에 알맞게 넣는다.
 ** 길어서 2개로 나누어진 후반부
 ** void
@@ -122,6 +86,42 @@ int num_cmd, int num_redirect)
 		else
 			input_cmd(token, str, i, &num_cmd);
 	}
+}
+
+/*
+** minishell의 token에 받은 이중 문자열 str('|'으로 나누어진)을 알맞게 분배해서 넣는 함수
+** 각각의 token에 들어간 cmd, redirection의 갯수를 샌다.
+** 길어서 2개로 나누어진 전반부
+** void
+**
+** @param		token	minishell의 token변수
+** @param		str		'|'으로 나누어진 명령어 목록
+*/
+
+static void	input_token(t_token *token, char **str)
+{
+	int	i;
+	int	num_redirect;
+	int	num_cmd;
+
+	i = -1;
+	num_redirect = 0;
+	num_cmd = 0;
+	while (str[++i])
+	{
+		if (!ft_strncmp(str[i], "<", 2))
+			num_redirect++;
+		else if (!ft_strncmp(str[i], "<<", 3))
+			num_redirect++;
+		else if (!ft_strncmp(str[i], ">", 2))
+			num_redirect++;
+		else if (!ft_strncmp(str[i], ">>", 3))
+			num_redirect++;
+		else
+			num_cmd++;
+	}
+	num_cmd -= num_redirect;
+	input_token_second(token, str, num_cmd, num_redirect);
 }
 
 /*
