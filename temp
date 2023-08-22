@@ -1,0 +1,24 @@
+
+		int i = 0;
+		while (i < minishell->token_num)
+		{
+			t_token temp = (minishell->token)[i];
+			int j = -1;
+			printf("token[%d]\ncmd:  ", i);
+			while (temp.cmd[++j])
+			{
+				printf("%s, ", temp.cmd[j]);
+			}
+			printf("\nredirection\n");
+			j = -1;
+			while (temp.redirection[++j])
+			{
+				int k = -1;
+				while (temp.redirection[j][++k])
+					printf("%s, ", temp.redirection[j][k]);
+				printf("\n");
+			}
+			i++;
+		}
+
+		printf("\nFinish Pasing\n");
