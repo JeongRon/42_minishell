@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 15:56:16 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/08/22 16:24:09 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/08/29 18:32:18 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 void	error(char *str)
 {
 	if (!str)
-		ft_putstr_fd("bash: bad argument", 2);
+		ft_putstr_fd("bash: bad argument\n", 2);
 	else
-		ft_putstr_fd(str, 2);
+		ft_putendl_fd(str, 2);
 	exit(EXIT_FAILURE);
 }

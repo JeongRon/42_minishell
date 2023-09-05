@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:32:20 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/08/22 19:55:38 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/08/22 19:57:44 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ char	*find_path(char *str, char **envp)
 ** @param		envp		환경변수
 */
 
-char	*quote_conversion(char *str, char**envp)
+char	*quote_conversion(char *s, char**envp)
 {
 	int		i;
 	int		j;
@@ -122,23 +122,22 @@ char	*quote_conversion(char *str, char**envp)
 
 	i = -1;
 	quote = 0;
-	while (str[++i])
+	while (s[++i])
 	{
-		if (f_q(str[i], &quote) && quote == -1)
+		if (f_q(s[i], &quote) && quote == -1)
 			continue ;
-		if (str[i] == '$')
+		if (s[i] == '$')
 		{
 			j = i + 1;
-			while (!(!(str[j]) || str[j] == ' ' || \
-			str[j] == '$' || str[j] == '\"'))
+			while (!(!(s[j]) || s[j] == ' ' || s[j] == '$' || s[j] == '\"'))
 				j++;
-			needle = ft_strdup_path(&str[i + 1], j - i - 1);
+			needle = ft_strdup_path(&s[i + 1], j - i - 1);
 			needle = find_path(needle, envp);
-			temp = str;
-			str = add_str(temp, needle, i, j);
+			temp = s;
+			s = add_str(temp, needle, i, j);
 		}
 	}
-	temp = del_quote(str);
+	temp = del_quote(s);
 	return (temp);
 }
 

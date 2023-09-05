@@ -6,16 +6,17 @@
 #    By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/13 17:36:01 by dongmiki          #+#    #+#              #
-#    Updated: 2023/08/22 16:24:38 by dongmiki         ###   ########.fr        #
+#    Updated: 2023/09/04 21:25:01 by dongmiki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror
 LIBFT = Libft
-LIBRL =  -L/Users/dongmiki/.brew/opt/readline/lib -lreadline
+LIBRL =  -lreadline -L /Users/$(USER)/.brew/opt/readline/lib
 NAME = minishell
 SRCS = minishell.c \
+		minishell_signal.c \
 		minishell_utils.c \
 		minishell_error.c \
 		minishell_input/minishell_input.c \
@@ -23,6 +24,11 @@ SRCS = minishell.c \
 		minishell_input/minishell_input_quote.c \
 		minishell_input/minishell_input_utils.c \
 		minishell_input/minishell_split_quote.c \
+		minishell_excute/minishell_util.c\
+		minishell_excute/minishell_child.c\
+		minishell_excute/minishell_excute_main.c\
+		minishell_excute/minishell_exec.c\
+		minishell_excute/minishell_set_redirection.c\
 
 
 OBJS = $(SRCS:.c=.o)
