@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:19:53 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/05 18:44:39 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/08 20:33:01 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	is_whitespace(char *line)
 static void	main_progress(char **envp)//envp는 구조체가 만들어지기 전까지 임시 void로 바꾸ㅡ면됨
 {
 	char		*input;
+	pid_t		pid;
 
 	while (1)
 	{
@@ -61,22 +62,47 @@ static void	main_progress(char **envp)//envp는 구조체가 만들어지기 전
 		}
 		if (*input != '\0')
 			add_history(input);
-		if (*input != '\0' && !is_whitespace(input))
+		pid = ft_fork();
+		setting_signal(2, 2);
+		if (pid == 0)
 		{
-			parse_input(g_minishell, input, envp);
-			excute_token(envp);
-			//free_token
-			setting_signal(0, 0);
+			if (*input != '\0' && !is_whitespace(input))
+			{
+				parse_input(g_minishell, input, envp);
+				excute_token(envp);
+				free_token();
+			}
+			exit(EXIT_SUCCESS);
 		}
-		if (is_whitespace(input))
-			free(input);
+		wait(NULL);
+		setting_signal(0, 0);
+		free(input);
 	}
 }
+
+void f1()
+{
+	system("leaks --list -- minishell");
+}
+
+static char	**get_cmd_path(char **env)
+{
+	int	index;
+
+	index = -1;
+	while (env[++index] != NULL)
+	{
+		if (ft_strncmp(env[index], "PATH=", 5) == 0)
+			return (ft_split(&env[index][5], ':'));
+	}
+	return (0);
+}	
 
 int	main(int ac, char **av, char **envp)
 {	
 	struct termios	term;
 
+	//atexit(f1);
 	if (ac != 1 || !av || !envp)
 		error(0);
 	g_minishell = (t_minishell *)ft_malloc(sizeof(t_minishell));
@@ -85,12 +111,11 @@ int	main(int ac, char **av, char **envp)
 	term.c_lflag &= ~(ICANON | NOFLSH | ECHOCTL);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	setting_signal(0, 0);
+	/*임시로 만든것*/
+	g_minishell->temp_path = get_cmd_path(envp);
 	main_progress(envp);
 	return (0);
 }
 
-//현제 시그널 동작중 자식안에서 ^c ,^\ 보이게 하기
-//		->(를 치면 추가 출력 Quit: 3)2개가 보여야 하고 출력은 redirection과 관련없이 메인창에 출력
-//free(token)
-//here_doc
+//cat만 넣었을때 입력내용 보이고 ctrl + D보이기
 //$? 처리

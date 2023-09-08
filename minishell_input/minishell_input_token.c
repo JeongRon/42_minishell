@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 21:03:48 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/08/22 19:54:27 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/08 19:04:25 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ void	make_token(t_minishell *minishell, char **str_split_pipe, char **envp)
 	while (str_split_pipe[++i])
 	{
 		temp = ft_split_quote(str_split_pipe[i], ' ', 0);
+		free(str_split_pipe[i]);
 		if (!temp)
 			error("bash: system error(malloc fail)");
 		j = -1;

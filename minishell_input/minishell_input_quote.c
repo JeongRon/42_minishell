@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 20:35:30 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/08/29 18:31:27 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/08 19:28:02 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,10 +143,9 @@ char	**continue_quote(char *str)
 	if (quote)
 		error("bash: qutoe did not close");
 	div_redirect = distinguish_redirection(str);
-	free(str);
 	temp = ft_split_quote(div_redirect, '|', 0);
+	free(div_redirect);
 	if (!temp)
 		error("bash: system error(malloc fail)");
-	free(div_redirect);
 	return (temp);
 }

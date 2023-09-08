@@ -6,12 +6,12 @@
 #    By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/13 17:36:01 by dongmiki          #+#    #+#              #
-#    Updated: 2023/09/04 21:25:01 by dongmiki         ###   ########.fr        #
+#    Updated: 2023/09/08 18:52:36 by dongmiki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 LIBFT = Libft
 LIBRL =  -lreadline -L /Users/$(USER)/.brew/opt/readline/lib
 NAME = minishell

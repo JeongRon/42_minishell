@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:35:51 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/05 18:19:21 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/08 20:06:19 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,6 @@
 # include "./Libft/libft.h"
 
 # define BUFFER_SIZE 5000
-
-typedef struct s_redirection
-{ 
-	char	**cmd;
-	char	***redirection;
-}	t_redirection;
 
 //배열로 만들어서 파이프별로 구성
 typedef struct s_token
@@ -69,6 +63,8 @@ char	**continue_quote(char *str);
 char	**ft_split_quote(char const *str, char c, int quote);
 pid_t	ft_fork(void);
 void	error(char *str);
+void	free_token(void);
+void	wait_child(void);
 void	make_token(t_minishell *minishell, char **str_split_pipe, char **envp);
 void	parse_input(t_minishell *minishell, char *str, char **envp);
 void	setting_signal(int sig_int, int sig_quit);
