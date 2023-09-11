@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:19:53 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/08 20:33:01 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/11 12:50:31 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,24 +98,32 @@ static char	**get_cmd_path(char **env)
 	return (0);
 }	
 
+static void term_setting(void)
+{
+	struct termios	term;
+
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag &= ~(NOFLSH | ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
+
 int	main(int ac, char **av, char **envp)
 {	
-	struct termios	term;
+	struct termios	main_term;
 
 	//atexit(f1);
 	if (ac != 1 || !av || !envp)
 		error(0);
+	tcgetattr(STDIN_FILENO, &main_term);
 	g_minishell = (t_minishell *)ft_malloc(sizeof(t_minishell));
 	print_shell();
-	tcgetattr(STDIN_FILENO, &term);
-	term.c_lflag &= ~(ICANON | NOFLSH | ECHOCTL);
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	term_setting();
 	setting_signal(0, 0);
 	/*임시로 만든것*/
 	g_minishell->temp_path = get_cmd_path(envp);
 	main_progress(envp);
+	tcsetattr(STDIN_FILENO, TCSANOW, &main_term);
 	return (0);
 }
 
-//cat만 넣었을때 입력내용 보이고 ctrl + D보이기
-//$? 처리
+//$?cjfl
