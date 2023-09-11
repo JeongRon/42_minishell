@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:09:21 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/09/11 15:31:07 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/11 21:11:38 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,23 +92,30 @@ static int	get_exit_status(char *cmd)
 	return (status);
 }
 
-static int	print_exit_code(int e, char **cmd)
+static int	print_exit_code(int status, char **cmd)
 {
-	int	status;
-
-	status = e;
-	printf("exit\n");
+	if (g_minishell->token_num == 0)
+		printf("exit\n");
 	if (status == 1)
-		printf("bash: exit: too many arguments\n");
-	else if (status == 2)
-		printf("bash: exit: %s: numeric argument required\n", cmd[1]);
+	{
+		ft_putstr_fd("bash: exit: too many arguments\n", 2);
+		return (256);
+	}
+	else if (status == 255)
+	{
+		ft_putstr_fd("bash: exit: ", 2);
+		ft_putstr_fd(cmd[1], 2);
+		ft_putstr_fd(": numeric argument required\n", 2);
+	}
 	else if (status == -1)
 	{
 		status = get_exit_status(cmd[1]);
 		if (status == 256)
 		{
-			printf("bash: exit: %s: numeric argument required\n", cmd[1]);
-			status = 2;
+			ft_putstr_fd("bash: exit: ", 2);
+			ft_putstr_fd(cmd[1], 2);
+			ft_putstr_fd(": numeric argument required\n", 2);
+			status = 255;
 		}
 	}
 	return (status);
@@ -118,6 +125,7 @@ int	start_exit(char **cmd)
 {
 	int	cnt;
 
+	infile_make(cmd);
 	cnt = ft_two_strlen(cmd);
 	if (cnt == 1)
 		return (print_exit_code(0, cmd));
@@ -125,12 +133,14 @@ int	start_exit(char **cmd)
 	{
 		if (check_num(cmd[1]) == SUCCESS)
 		{
+			if (get_exit_status(cmd[1]) == 256)
+				return (print_exit_code(-1, cmd));
 			if (cnt == 2)
 				return (print_exit_code(-1, cmd));
 			else
 				return (print_exit_code(1, cmd));
 		}
 		else
-			return (print_exit_code(2, cmd));
+			return (print_exit_code(255, cmd));
 	}
 }

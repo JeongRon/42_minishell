@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:35:51 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/11 17:36:53 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/11 20:19:24 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <readline/history.h>
 # include "./Libft/libft.h"
 
+# define OPEN_MAX 10240
 # define BUFFER_SIZE 5000
 # define FAIL 0
 # define SUCCESS 1
@@ -67,13 +68,18 @@ int		check_null(char **str, int count);
 int		f_q(char str, int *quote);
 int		excute_token(char **envp);
 int		filepath_search(char **cmd2, char *cmd, char *filepath);
+int		check_cmd2(char **cmd, t_env_var *env_var);
 char	*del_quote(char *str);
 char	*find_path(char *str, char **envp);
 char	*quote_conversion(char *str, char**envp);
+char	*get_next_line(int fd);
+void	free_all(char *a, char *b);
+char	*gnl_strjoin(char *buff, char *tmp, int tmp_len);
+int		ft_linelen(const char *s);
 char	**continue_quote(char *str);
 char	**ft_split_quote(char const *str, char c, int quote);
 pid_t	ft_fork(void);
-void	error(char *str);
+void	error(char *str, int flag);
 void	free_token(void);
 void	wait_child(void);
 void	make_token(t_minishell *minishell, char **str_split_pipe, char **envp);
@@ -89,6 +95,7 @@ void	ft_dup2(int old_fd, int new_fd);
 void	set_redirection(char **str);
 void	child_process(int i, char **env, int fd[], int pre_pipe[]);
 void	switch_exit_code(void);
+void	infile_make(char **cmd);
 // built_in Folder
 // set_env_var.c
 int		set_env_var(t_env_var *env_var, char **envp);

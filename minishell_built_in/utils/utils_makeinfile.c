@@ -1,40 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   utils_makeinfile.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/04 16:08:27 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/09/11 20:48:04 by dongmiki         ###   ########.fr       */
+/*   Created: 2023/09/11 18:04:29 by dongmiki          #+#    #+#             */
+/*   Updated: 2023/09/11 19:09:32 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_env(t_env_var *env_var)
+void	infile_make(char **cmd)
 {
+	int	infile;
 	int	i;
 
-	i = 1;
-	while (env_var->env[i])
+	if (g_minishell->token_num != 1)
+		return ;
+	infile = open("builtin_file.txt", O_WRONLY | O_TRUNC | O_CREAT, 0600);
+	if (infile == -1)
+		ft_error("Infile Open Error");
+	i = -1;
+	while (cmd[++i])
 	{
-		printf("%s\n", env_var->env[i]);
-		i++;
+		write(infile, cmd[i], ftj_strlen(cmd[i]));
+		write(infile, " ", 1);
 	}
-}
-
-// env ->> 에러 코드 리턴
-int	start_env(char **cmd, t_env_var *env_var)
-{
-	int	cmd_cnt;
-
-	cmd_cnt = ft_two_strlen(cmd);
-	if (cmd_cnt >= 2)
-	{
-		ft_putstr_fd("env: No such file or directory\n", 2);
-		return (127);
-	}
-	print_env(env_var);
-	return (0);
+	close(infile);
+	exit(0);
 }

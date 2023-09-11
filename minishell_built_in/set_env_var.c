@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 14:06:30 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/09/11 15:53:54 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/11 20:03:03 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ int	set_env_var(t_env_var *env_var, char **envp)
 	env_cnt++;
 	if (allocate_env_exp(env_var, env_cnt) == FAIL)
 		perror("MALLOC");
-	env_var->env[0] = ft_strdup("$?=0");
-	env_var->exp[0] = ft_exp_strdup("$?=0");
+	env_var->env[0] = ft_strdup("?=0");
+	env_var->exp[0] = ft_exp_strdup("?=0");
 	i = 0;
 	while (++i < env_cnt)
 		if (fill_env_exp(env_var, envp, i) == FAIL)

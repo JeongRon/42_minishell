@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 14:44:05 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/09/11 15:23:10 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/11 21:18:02 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ static int	change_dir_msg(char *path, t_env_var *env_var)
 	pwd = NULL;
 	if (chdir(path) != 0)
 	{
-		printf("bash: cd: %s: No such file or directory\n", path);
+		ft_putstr_fd("bash: cd: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		free(old_pwd);
 		return (1);
 	}
@@ -110,14 +112,15 @@ int	start_cd(char **cmd, t_env_var *env_var)
 	int	status;
 	int	home_flag;
 
+	infile_make(cmd);
 	cnt = ft_two_strlen(cmd);
 	status = 1;
 	home_flag = check_duplicate(env_var->env, "HOME", 1);
 	if (cnt == 1 && home_flag == 0)
-		printf("bash: cd: HOME not set\n");
+		ft_putstr_fd("bash: cd: HOME not set\n", 2);
 	else if (cnt == 1 && home_flag == 1)
 		status = change_dir("$HOME", env_var);
-	else if (cnt == 2)
+	else
 	{
 		if (ftj_strcmp(cmd[1], "~") == 0 && home_flag == 0)
 			status = change_dir(env_var->home, env_var);
@@ -126,7 +129,5 @@ int	start_cd(char **cmd, t_env_var *env_var)
 		else
 			status = change_dir(cmd[1], env_var);
 	}
-	else if (cnt >= 3)
-		printf("bash: cd: too many arguments\n");
 	return (status);
 }

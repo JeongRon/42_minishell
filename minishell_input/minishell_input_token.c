@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 21:03:48 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/08 19:04:25 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/11 20:21:40 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	input_redirection(t_token *token, char **str, int *i, int *num)
 	token->redirection[*num] = (char **)ft_malloc(sizeof(char *) * 3);
 	token->redirection[*num][0] = str[*i];
 	if (!str[(*i) + 1])
-		error("bash: syntax error near unexpected token `newline'");
+		error("bash: syntax error near unexpected token `newline'", 258);
 	token->redirection[*num][1] = str[(*i) + 1];
 	token->redirection[*num][2] = NULL;
 	(*num)++;
@@ -152,7 +152,7 @@ void	make_token(t_minishell *minishell, char **str_split_pipe, char **envp)
 		temp = ft_split_quote(str_split_pipe[i], ' ', 0);
 		free(str_split_pipe[i]);
 		if (!temp)
-			error("bash: system error(malloc fail)");
+			error("bash: system error(malloc fail)", 1);
 		j = -1;
 		while (temp[++j])
 			temp[j] = quote_conversion(temp[j], envp);

@@ -6,7 +6,7 @@
 #    By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/13 17:36:01 by dongmiki          #+#    #+#              #
-#    Updated: 2023/09/11 15:32:37 by dongmiki         ###   ########.fr        #
+#    Updated: 2023/09/11 19:20:00 by dongmiki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,8 @@ SRCS = minishell.c \
 		minishell_signal.c \
 		minishell_utils.c \
 		minishell_error.c \
+		minishell_gnl_utils.c\
+		minishell_gnl.c\
 		minishell_input/minishell_input.c \
 		minishell_input/minishell_input_token.c \
 		minishell_input/minishell_input_quote.c \
@@ -36,6 +38,7 @@ SRCS = minishell.c \
 		minishell_built_in/utils/utils_malloc.c\
 		minishell_built_in/utils/utils_mini.c\
 		minishell_built_in/utils/utils_split.c\
+		minishell_built_in/utils/utils_makeinfile.c\
 		minishell_built_in/cd.c\
 		minishell_built_in/check_cmd.c\
 		minishell_built_in/echo.c\

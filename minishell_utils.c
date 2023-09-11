@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:40:13 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/11 15:16:18 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/11 20:46:20 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	*ft_malloc(size_t size)
 
 	temp = malloc(size);
 	if (!temp)
-		error("bash: system error(malloc fail)");
+		error("bash: system error(malloc fail)", 1);
 	return (temp);
 }
 
@@ -72,9 +72,22 @@ void	free_token(void)
 void	switch_exit_code(void)
 {
 	char	*temp;
+	char	**temp2;
+	int		infile;
 
+	infile = open("builtin_file.txt", O_RDONLY, 0600);
+	if (infile != -1)
+	{
+		temp = get_next_line(infile);
+		temp2 = ft_split(temp, ' ');
+		free(temp);
+		close(infile);
+		unlink("builtin_file.txt");
+		g_minishell->exit_code = check_cmd2(temp2, &g_minishell->env_var);
+		free(temp2);
+	}
 	temp = g_minishell->env_var.env[0];
-	g_minishell->env_var.env[0] = ft_strjoin("$?=", \
+	g_minishell->env_var.env[0] = ft_strjoin("?=", \
 	ft_itoa(g_minishell->exit_code));
 	free(temp);
 }

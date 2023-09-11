@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 15:56:16 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/08/29 18:32:18 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/11 20:19:35 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 ** @param		str	실패시 종료에 출력할 문자열
 */
 
-void	error(char *str)
+void	error(char *str, int flag)
 {
 	if (!str)
 		ft_putstr_fd("bash: bad argument\n", 2);
 	else
 		ft_putendl_fd(str, 2);
-	exit(EXIT_FAILURE);
+	exit(flag);
 }

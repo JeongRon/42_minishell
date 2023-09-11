@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:19:53 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/11 16:30:52 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/11 21:21:35 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,13 @@ int	main(int ac, char **av, char **envp)
 	struct termios	main_term;
 
 	if (ac != 1 || !av || !envp)
-		error(0);
+		error(0, 1);
 	tcgetattr(STDIN_FILENO, &main_term);
 	g_minishell = (t_minishell *)ft_malloc(sizeof(t_minishell));
 	if (set_env_var(&g_minishell->env_var, envp) == 0)
 		return (0);
 	g_minishell->exit_code = 0;
+	g_minishell->token_num = 0;
 	print_shell();
 	term_setting();
 	setting_signal(0, 0);
@@ -104,10 +105,3 @@ int	main(int ac, char **av, char **envp)
 	tcsetattr(STDIN_FILENO, TCSANOW, &main_term);
 	return (0);
 }
-
-//$?처리
-//cd,export,unset,exit?
-else if (ftj_strcmp(cmd[0], "cd") == 0)
-else if (ftj_strcmp(cmd[0], "export") == 0)
-else if (ftj_strcmp(cmd[0], "unset") == 0)
-else if (ftj_strcmp(cmd[0], "exit") == 0)

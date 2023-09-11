@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 20:35:30 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/08 19:28:02 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/11 20:20:28 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,21 +70,21 @@ static char	*distinguish_redirection(char *str)
 		if (str[i] == '>')
 		{
 			if (flag)
-				error("bash: syntax error near unexpected token `>'");
+				error("bash: syntax error near unexpected token `>'", 258);
 			flag = 1;
 			if (str[i + 1] && str[i + 1] == '>')
 				i++;
 			else if (str[i + 1] && str[i + 1] == '<')
-				error("bash: syntax error near unexpected token `<'");
+				error("bash: syntax error near unexpected token `<'", 258);
 			j += 2;
 		}
 		else if (str[i] == '<')
 		{
 			if (flag)
-				error("bash: syntax error near unexpected token `<'");
+				error("bash: syntax error near unexpected token `<'", 258);
 			flag = 1;
 			if (str[i + 1] && str[i + 1] == '>')
-				error("bash: syntax error near unexpected token `>'");
+				error("bash: syntax error near unexpected token `>'", 258);
 			else if (str[i + 1] && str[i + 1] == '<')
 				i++;
 			j += 2;
@@ -141,11 +141,11 @@ char	**continue_quote(char *str)
 	quote = 0;
 	find_quote(str, -1, &quote);
 	if (quote)
-		error("bash: qutoe did not close");
+		error("bash: qutoe did not close", 1);
 	div_redirect = distinguish_redirection(str);
 	temp = ft_split_quote(div_redirect, '|', 0);
 	free(div_redirect);
 	if (!temp)
-		error("bash: system error(malloc fail)");
+		error("bash: system error(malloc fail)", 1);
 	return (temp);
 }
