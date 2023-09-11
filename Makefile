@@ -6,7 +6,7 @@
 #    By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/13 17:36:01 by dongmiki          #+#    #+#              #
-#    Updated: 2023/09/08 18:52:36 by dongmiki         ###   ########.fr        #
+#    Updated: 2023/09/11 15:32:37 by dongmiki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,23 @@ SRCS = minishell.c \
 		minishell_excute/minishell_excute_main.c\
 		minishell_excute/minishell_exec.c\
 		minishell_excute/minishell_set_redirection.c\
-
+		minishell_built_in/utils/utils_add.c\
+		minishell_built_in/utils/utils_check.c\
+		minishell_built_in/utils/utils_del.c\
+		minishell_built_in/utils/utils_lib.c\
+		minishell_built_in/utils/utils_malloc.c\
+		minishell_built_in/utils/utils_mini.c\
+		minishell_built_in/utils/utils_split.c\
+		minishell_built_in/cd.c\
+		minishell_built_in/check_cmd.c\
+		minishell_built_in/echo.c\
+		minishell_built_in/env.c\
+		minishell_built_in/exit.c\
+		minishell_built_in/export.c\
+		minishell_built_in/pwd.c\
+		minishell_built_in/set_env_var.c\
+		minishell_built_in/sort_exp.c\
+		minishell_built_in/unset.c\
 
 OBJS = $(SRCS:.c=.o)
 HEAD = minishell.h

@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:19:53 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/11 12:50:31 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/11 16:30:52 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,13 @@ int	is_whitespace(char *line)
 	return (1);
 }
 
-static void	main_progress(char **envp)//envp는 구조체가 만들어지기 전까지 임시 void로 바꾸ㅡ면됨
+static void	main_progress(int status, char *input, pid_t pid)
 {
-	char		*input;
-	pid_t		pid;
-
 	while (1)
 	{
 		input = readline("minishell$> ");
 		if (!input)
-		{
-			printf("exit\n");//이거 붙여서 처리해야하는데..진짜 시발모르겠어
 			break ;
-		}
 		if (*input != '\0')
 			add_history(input);
 		pid = ft_fork();
@@ -68,37 +62,21 @@ static void	main_progress(char **envp)//envp는 구조체가 만들어지기 전
 		{
 			if (*input != '\0' && !is_whitespace(input))
 			{
-				parse_input(g_minishell, input, envp);
-				excute_token(envp);
+				parse_input(g_minishell, input, g_minishell->env_var.env);
+				excute_token(g_minishell->env_var.env);
 				free_token();
 			}
-			exit(EXIT_SUCCESS);
+			exit(g_minishell->exit_code);
 		}
-		wait(NULL);
+		wait(&status);
+		g_minishell->exit_code = WEXITSTATUS(status);
+		switch_exit_code();
 		setting_signal(0, 0);
 		free(input);
 	}
 }
 
-void f1()
-{
-	system("leaks --list -- minishell");
-}
-
-static char	**get_cmd_path(char **env)
-{
-	int	index;
-
-	index = -1;
-	while (env[++index] != NULL)
-	{
-		if (ft_strncmp(env[index], "PATH=", 5) == 0)
-			return (ft_split(&env[index][5], ':'));
-	}
-	return (0);
-}	
-
-static void term_setting(void)
+static void	term_setting(void)
 {
 	struct termios	term;
 
@@ -111,19 +89,25 @@ int	main(int ac, char **av, char **envp)
 {	
 	struct termios	main_term;
 
-	//atexit(f1);
 	if (ac != 1 || !av || !envp)
 		error(0);
 	tcgetattr(STDIN_FILENO, &main_term);
 	g_minishell = (t_minishell *)ft_malloc(sizeof(t_minishell));
+	if (set_env_var(&g_minishell->env_var, envp) == 0)
+		return (0);
+	g_minishell->exit_code = 0;
 	print_shell();
 	term_setting();
 	setting_signal(0, 0);
-	/*임시로 만든것*/
-	g_minishell->temp_path = get_cmd_path(envp);
-	main_progress(envp);
+	main_progress(0, NULL, 0);
+	printf("exit\n");
 	tcsetattr(STDIN_FILENO, TCSANOW, &main_term);
 	return (0);
 }
 
-//$?cjfl
+//$?처리
+//cd,export,unset,exit?
+else if (ftj_strcmp(cmd[0], "cd") == 0)
+else if (ftj_strcmp(cmd[0], "export") == 0)
+else if (ftj_strcmp(cmd[0], "unset") == 0)
+else if (ftj_strcmp(cmd[0], "exit") == 0)

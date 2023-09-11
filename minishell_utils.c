@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:40:13 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/08 19:40:07 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/11 15:16:18 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	*ft_malloc(size_t size)
 	temp = malloc(size);
 	if (!temp)
 		error("bash: system error(malloc fail)");
-	//이런식으로 나가면 상황에 따라 leaks이 날 수도 있음
 	return (temp);
 }
 
@@ -68,4 +67,14 @@ void	free_token(void)
 		free(g_minishell->token);
 	}
 	g_minishell->token = NULL;
+}
+
+void	switch_exit_code(void)
+{
+	char	*temp;
+
+	temp = g_minishell->env_var.env[0];
+	g_minishell->env_var.env[0] = ft_strjoin("$?=", \
+	ft_itoa(g_minishell->exit_code));
+	free(temp);
 }
