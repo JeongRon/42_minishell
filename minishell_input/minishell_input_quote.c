@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 20:35:30 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/11 20:20:28 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/12 15:25:59 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 ** @param		i		문자열의 시작 위치 default(0)
 ** @param		quote	quote가 제대로 닫혔는지 확인해주는 flag
 */
-
 static void	find_quote(char *str, int i, int *quote)
 {
 	while (str[++i])
@@ -42,60 +41,12 @@ static void	find_quote(char *str, int i, int *quote)
 	}
 }
 
-/*
-** str에 있는 redirection을 구분해서 ' '으로 구분해주는 함수
-** char *
-** 나누어진 문자열을 만들어서 리턴
-**
-** @param		str		입력받은 명령어(문자열)
-** @value		flag	redirection이 중복되어서 나오는지 확인하는 변수
-*/
-
-static char	*distinguish_redirection(char *str)
+char	*distinguish_redirection_part2(int i, int j, char *str, int quote)
 {
-	int		i;
-	int		j;
-	int		quote;
-	int		flag;
 	char	*temp;
 
-	i = -1;
-	j = 0;
-	quote = 0;
-	flag = 0;
-	while (str[++i])
-	{
-		if (f_q(str[i], &quote) && quote != 0)
-			continue ;
-		if (str[i] == '>')
-		{
-			if (flag)
-				error("bash: syntax error near unexpected token `>'", 258);
-			flag = 1;
-			if (str[i + 1] && str[i + 1] == '>')
-				i++;
-			else if (str[i + 1] && str[i + 1] == '<')
-				error("bash: syntax error near unexpected token `<'", 258);
-			j += 2;
-		}
-		else if (str[i] == '<')
-		{
-			if (flag)
-				error("bash: syntax error near unexpected token `<'", 258);
-			flag = 1;
-			if (str[i + 1] && str[i + 1] == '>')
-				error("bash: syntax error near unexpected token `>'", 258);
-			else if (str[i + 1] && str[i + 1] == '<')
-				i++;
-			j += 2;
-		}
-		else
-			flag = 0;
-	}
-	j += j + i;
 	temp = (char *)ft_malloc(sizeof(char) * (j + 1));
 	temp[j] = '\0';
-	i = -1;
 	j = -1;
 	while (str[++i])
 	{
@@ -108,11 +59,7 @@ static char	*distinguish_redirection(char *str)
 			temp[j] = str[i];
 			if ((str[i] == '>' && str[i + 1] && str[i + 1] == '>') || \
 			(str[i] == '<' && str[i + 1] && str[i + 1] == '<'))
-			{
-				i++;
-				j++;
-				temp[j] = str[i];
-			}
+				temp[++j] = str[++i];
 			j++;
 			temp[j] = ' ';
 		}
@@ -120,6 +67,56 @@ static char	*distinguish_redirection(char *str)
 			temp[j] = str[i];
 	}
 	return (temp);
+}
+
+static void	distinguish_redirection_count(char *str, int *i, int *j, int *flag)
+{
+	if (str[*i] == '>')
+	{
+		if (*flag)
+			error("bash: syntax error near unexpected token `>'", 258);
+		*flag = 1;
+		if (str[*i + 1] && str[*i + 1] == '>')
+			(*i)++;
+		else if (str[*i + 1] && str[*i + 1] == '<')
+			error("bash: syntax error near unexpected token `<'", 258);
+		*j += 2;
+	}
+	else if (str[*i] == '<')
+	{
+		if (*flag)
+			error("bash: syntax error near unexpected token `<'", 258);
+		*flag = 1;
+		if (str[*i + 1] && str[*i + 1] == '>')
+			error("bash: syntax error near unexpected token `>'", 258);
+		else if (str[*i + 1] && str[*i + 1] == '<')
+			(*i)++;
+		*j += 2;
+	}
+	else
+		*flag = 0;
+}
+
+/*
+** str에 있는 redirection을 구분해서 ' '으로 구분해주는 함수
+** char *
+** 나누어진 문자열을 만들어서 리턴
+**
+** @param		str		입력받은 명령어(문자열)
+** @value		flag	redirection이 중복되어서 나오는지 확인하는 변수
+*/
+static char	*distinguish_redirection(char *str, int i, int j, int quote)
+{
+	int		flag;
+
+	flag = 0;
+	while (str[++i])
+	{
+		if (f_q(str[i], &quote) && quote != 0)
+			continue ;
+		distinguish_redirection_count(str, &i, &j, &flag);
+	}
+	return (distinguish_redirection_part2(-1, j + i, str, quote));
 }
 
 /*
@@ -142,7 +139,7 @@ char	**continue_quote(char *str)
 	find_quote(str, -1, &quote);
 	if (quote)
 		error("bash: qutoe did not close", 1);
-	div_redirect = distinguish_redirection(str);
+	div_redirect = distinguish_redirection(str, -1, 0, 0);
 	temp = ft_split_quote(div_redirect, '|', 0);
 	free(div_redirect);
 	if (!temp)

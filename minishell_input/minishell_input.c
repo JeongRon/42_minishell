@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:32:20 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/11 20:46:34 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/12 15:29:33 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*ft_strdup_path(char *src, int n)
 
 	add = (char *)malloc(sizeof(char) * (n + 2));
 	if (!add)
-		error (0, 1);
+		error ("bash: system error(malloc fail)", 1);
 	i = 0;
 	while (src[i] && i < n)
 	{
@@ -100,7 +100,7 @@ char	*find_path(char *str, char **envp)
 		return (NULL);
 	env = ft_strdup(envp[i] + ft_strlen(str));
 	if (!env)
-		error(0, 1);
+		error("bash: system error(malloc fail)", 1);
 	return (env);
 }
 

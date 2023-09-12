@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 21:03:48 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/11 20:21:40 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/12 15:37:45 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int num_cmd, int num_redirect)
 	token->redirection = (char ***)ft_malloc(sizeof(char **) * \
 	(num_redirect + 1));
 	token->redirection[num_redirect] = NULL;
+	if (num_cmd < 0)
+		error("bash: syntax error near unexpected token `newline'", 258);
 	token->cmd = (char **)ft_malloc(sizeof(char *) * (num_cmd + 1));
 	token->cmd[num_cmd] = NULL;
 	i = -1;
