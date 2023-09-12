@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 14:15:21 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/09/11 15:51:47 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/12 18:09:06 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	sort_exp(t_env_var *env_var)
 		if (i == env_var->exp_cnt - 1)
 		{
 			exp_tmp[i] = ftj_strdup(env_var->exp[catch]);
+			free(env_var->exp[catch]);
 			break ;
 		}
 		exp_tmp[i] = ftj_strdup(env_var->exp[catch]);

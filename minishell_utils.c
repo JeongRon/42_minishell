@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:40:13 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/12 15:28:21 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/12 18:03:18 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	free_token(void)
 void	switch_exit_code(void)
 {
 	char	*temp;
+	char	*temp3;
 	char	**temp2;
 	int		infile;
 
@@ -84,10 +85,14 @@ void	switch_exit_code(void)
 		close(infile);
 		unlink("builtin_file.txt");
 		g_minishell->exit_code = check_cmd2(temp2, &g_minishell->env_var);
+		infile = -1;
+		while (temp2[++infile])
+			free(temp2[infile]);
 		free(temp2);
 	}
 	temp = g_minishell->env_var.env[0];
-	g_minishell->env_var.env[0] = ft_strjoin("?=", \
-	ft_itoa(g_minishell->exit_code));
+	temp3 = ft_itoa(g_minishell->exit_code);
+	g_minishell->env_var.env[0] = ft_strjoin("?=", temp3);
 	free(temp);
+	free(temp3);
 }
