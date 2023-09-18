@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:19:53 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/18 13:08:36 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/18 16:29:34 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,9 @@ static void	term_setting(void)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
+
 int	main(int ac, char **av, char **envp)
-{	
+{
 	struct termios	main_term;
 
 	if (ac != 1 || !av || !envp)

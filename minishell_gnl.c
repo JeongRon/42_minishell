@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_GNL.c                                    :+:      :+:    :+:   */
+/*   minishell_gnl.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 19:54:32 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/09/11 19:21:27 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/18 15:29:37 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ char	*get_next_line(int fd)
 	if (!buff)
 		return (NULL);
 	line_len = ft_linelen(buff);
-	line = make_line(buff, line_len);
+	line = make_line(buff, line_len - 1);
 	cache = make_cache(buff, line, line_len);
 	free(buff);
 	return (line);

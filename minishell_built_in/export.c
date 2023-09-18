@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 16:56:17 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/09/11 20:46:05 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/18 15:36:51 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,26 @@ static void	search_export(char *cmd, t_env_var *env_var, int equals_flag)
 	}
 }
 
+static int	parsing_export(char *cmd)
+{
+	int	i;
+
+	i = -1;
+	while (cmd[++i])
+	{
+		if (cmd[i] == '=')
+		{
+			if (i == 0)
+				return (FAIL);
+			break ;
+		}
+		if (!((65 <= cmd[i] && cmd[i] <= 90) || cmd[i] == 95 \
+		|| (97 <= cmd[i] && cmd[i] <= 122)))
+			return (FAIL);
+	}
+	return (SUCCESS);
+}
+
 int	start_export(char **cmd, t_env_var *env_var)
 {
 	int	status;
@@ -83,8 +103,7 @@ int	start_export(char **cmd, t_env_var *env_var)
 		infile_make(cmd);
 		while (cmd[++i])
 		{
-			if (!((65 <= cmd[i][0] && cmd[i][0] <= 90) || cmd[i][0] == 95
-				|| (97 <= cmd[i][0] && cmd[i][0] <= 122)))
+			if (parsing_export(cmd[i]) == FAIL)
 			{
 				ft_putstr_fd("bash: export: `", 2);
 				ft_putstr_fd(cmd[i], 2);

@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:23:55 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/09/05 12:13:00 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/18 16:23:19 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,18 @@
 
 void	ft_execve(char *filepath, char **av, char **envp)
 {
-	if (execve(filepath, av, envp) == -1)
-		ft_error("execve Error");
+	if (access(filepath, X_OK) == 0)
+	{
+		if (execve(filepath, av, envp) == -1)
+		{
+			write(2, "is a directory", 15);
+			write(2, "\n", 1);
+			exit(126);
+		}
+	}
+	write(2, "Permission denied", 18);
+	write(2, "\n", 1);
+	exit(126);
 }
 
 void	ft_dup2(int old_fd, int new_fd)

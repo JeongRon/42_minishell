@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:40:13 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/12 18:03:18 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/18 15:33:26 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,22 +73,23 @@ void	switch_exit_code(void)
 {
 	char	*temp;
 	char	*temp3;
-	char	**temp2;
+	char	*temp2[1000];
 	int		infile;
+	int		i;
 
 	infile = open("builtin_file.txt", O_RDONLY, 0600);
 	if (infile != -1)
 	{
-		temp = get_next_line(infile);
-		temp2 = ft_split(temp, ' ');
-		free(temp);
+		i = 0;
+		temp2[i] = get_next_line(infile);
+		while (temp2[i])
+			temp2[++i] = get_next_line(infile);
 		close(infile);
 		unlink("builtin_file.txt");
 		g_minishell->exit_code = check_cmd2(temp2, &g_minishell->env_var);
 		infile = -1;
 		while (temp2[++infile])
 			free(temp2[infile]);
-		free(temp2);
 	}
 	temp = g_minishell->env_var.env[0];
 	temp3 = ft_itoa(g_minishell->exit_code);

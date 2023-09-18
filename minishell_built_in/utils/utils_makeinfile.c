@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 18:04:29 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/11 19:09:32 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/18 15:13:04 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	infile_make(char **cmd)
 	while (cmd[++i])
 	{
 		write(infile, cmd[i], ftj_strlen(cmd[i]));
-		write(infile, " ", 1);
+		write(infile, "\n", 1);
 	}
 	close(infile);
 	exit(0);

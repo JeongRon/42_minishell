@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 21:03:48 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/12 15:37:45 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/18 16:03:12 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ int num_cmd, int num_redirect)
 	token->redirection = (char ***)ft_malloc(sizeof(char **) * \
 	(num_redirect + 1));
 	token->redirection[num_redirect] = NULL;
-	if (num_cmd < 0)
-		error("bash: syntax error near unexpected token `newline'", 258);
 	token->cmd = (char **)ft_malloc(sizeof(char *) * (num_cmd + 1));
 	token->cmd[num_cmd] = NULL;
 	i = -1;
@@ -77,6 +75,8 @@ int num_cmd, int num_redirect)
 	num_cmd = 0;
 	while (str[++i])
 	{
+		if (str[i][0] == '\0')
+			continue ;
 		if (!ft_strncmp(str[i], "<", 2))
 			input_redirection(token, str, &i, &num_redirect);
 		else if (!ft_strncmp(str[i], "<<", 3))
@@ -100,17 +100,17 @@ int num_cmd, int num_redirect)
 ** @param		str		'|'으로 나누어진 명령어 목록
 */
 
-static void	input_token(t_token *token, char **str)
+static void	input_token(t_token *token, char **str, int i)
 {
-	int	i;
 	int	num_redirect;
 	int	num_cmd;
 
-	i = -1;
 	num_redirect = 0;
 	num_cmd = 0;
 	while (str[++i])
 	{
+		if (str[i][0] == '\0')
+			continue ;
 		if (!ft_strncmp(str[i], "<", 2))
 			num_redirect++;
 		else if (!ft_strncmp(str[i], "<<", 3))
@@ -123,6 +123,8 @@ static void	input_token(t_token *token, char **str)
 			num_cmd++;
 	}
 	num_cmd -= num_redirect;
+	if (num_cmd < 0)
+		error("bash: syntax error near unexpected token `newline'", 258);
 	input_token_second(token, str, num_cmd, num_redirect);
 }
 
@@ -144,8 +146,7 @@ void	make_token(t_minishell *minishell, char **str_split_pipe, char **envp)
 
 	i = -1;
 	while (str_split_pipe[++i])
-	{
-	}
+		;
 	minishell->token = (t_token *)ft_malloc(sizeof(t_token) * i);
 	minishell->token_num = i;
 	i = -1;
@@ -158,7 +159,7 @@ void	make_token(t_minishell *minishell, char **str_split_pipe, char **envp)
 		j = -1;
 		while (temp[++j])
 			temp[j] = quote_conversion(temp[j], envp);
-		input_token(&(minishell->token[i]), temp);
+		input_token(&(minishell->token[i]), temp, -1);
 		free(temp);
 	}
 }
