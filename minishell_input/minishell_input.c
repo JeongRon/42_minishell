@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:32:20 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/12 15:29:33 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/18 14:07:35 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,8 @@ char	*quote_conversion(char *s, char**envp)
 	{
 		if (f_q(s[i], &quote) && quote == -1)
 			continue ;
-		if (s[i] == '$')
+		if (s[i] == '$' && !(!(s[i + 1]) || \
+		s[i + 1] == ' ' || s[i + 1] == '$' || s[i + 1] == '\"'))
 		{
 			j = i + 1;
 			while (!(!(s[j]) || s[j] == ' ' || s[j] == '$' || s[j] == '\"'))
@@ -137,8 +138,7 @@ char	*quote_conversion(char *s, char**envp)
 			s = add_str(temp, needle, i, j);
 		}
 	}
-	temp = del_quote(s);
-	return (temp);
+	return (del_quote(s));
 }
 
 /*

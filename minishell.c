@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:19:53 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/12 18:11:37 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/18 13:08:36 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,21 @@
 **
 */
 
-static void	print_shell(void)
-{
-	printf("#########################################################\n\
-#                                                       #\n\
-# MM    MM iii         iii       hh             lll lll #\n\
-# MMM  MMM     nn nnn       sss  hh        eee  lll lll #\n\
-# MM MM MM iii nnn  nn iii s     hhhhhh  ee   e lll lll #\n\
-# MM    MM iii nn   nn iii  sss  hh   hh eeeee  lll lll #\n\
-# MM    MM iii nn   nn iii     s hh   hh  eeeee lll lll #\n\
-#                           sss                         #\n\
-#                                                       #\n\
-#########################################################\n\
-########################### made by. jeongrol, dongmiki #\n\
-#########################################################\n\n");
-}
+// static void	print_shell(void)
+// {
+// 	printf("#########################################################\n\
+// #                                                       #\n\
+// # MM    MM iii         iii       hh             lll lll #\n\
+// # MMM  MMM     nn nnn       sss  hh        eee  lll lll #\n\
+// # MM MM MM iii nnn  nn iii s     hhhhhh  ee   e lll lll #\n\
+// # MM    MM iii nn   nn iii  sss  hh   hh eeeee  lll lll #\n\
+// # MM    MM iii nn   nn iii     s hh   hh  eeeee lll lll #\n\
+// #                           sss                         #\n\
+// #                                                       #\n\
+// #########################################################\n\
+// ########################### made by. jeongrol, dongmiki #\n\
+// #########################################################\n\n");
+// }
 
 int	is_whitespace(char *line)
 {
@@ -97,7 +97,7 @@ int	main(int ac, char **av, char **envp)
 		return (0);
 	g_minishell->exit_code = 0;
 	g_minishell->token_num = 0;
-	print_shell();
+	// print_shell();
 	term_setting();
 	setting_signal(0, 0);
 	main_progress(0, NULL, 0);

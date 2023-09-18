@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:09:21 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/09/11 21:11:38 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/18 13:36:31 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static int	print_exit_code(int status, char **cmd)
 	if (status == 1)
 	{
 		ft_putstr_fd("bash: exit: too many arguments\n", 2);
-		return (256);
+		return (1);
 	}
 	else if (status == 255)
 	{
@@ -137,7 +137,7 @@ int	start_exit(char **cmd)
 				return (print_exit_code(-1, cmd));
 			if (cnt == 2)
 				return (print_exit_code(-1, cmd));
-			else
+			else 
 				return (print_exit_code(1, cmd));
 		}
 		else

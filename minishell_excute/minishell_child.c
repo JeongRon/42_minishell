@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:12:56 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/09/11 20:40:39 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/18 13:48:00 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	filepath_search(char **cmd2, char *cmd, char *filepath)
 	int	length;
 
 	check_cmd(cmd2, &g_minishell->env_var);
-	if (access(cmd, F_OK) == 0)
+	if (access(cmd, X_OK) == 0)
 		return (0);
 	i = -1;
 	while (g_minishell->env_var.path != 0 && \
@@ -32,7 +32,7 @@ int	filepath_search(char **cmd2, char *cmd, char *filepath)
 		ft_strlcat(filepath, g_minishell->env_var.path[i], length);
 		ft_strlcat(filepath, "/", ft_strlen(filepath) + 2);
 		ft_strlcat(filepath, cmd, ft_strlen(filepath) + ft_strlen(cmd) + 1);
-		if (access(filepath, F_OK) == 0)
+		if (access(filepath, X_OK) == 0)
 			return (1);
 	}
 	write(2, cmd, ft_strlen(cmd));
