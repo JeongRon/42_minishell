@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_excute_main.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 18:01:27 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/19 15:46:50 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/19 16:37:46 by jeongrol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int	excute_token(char **envp)
 			here_doc_count(g_minishell->token[i].redirection[j]);
 	}
 	g_minishell->here_doc_count = 0;
+	update_path();
 	if (g_minishell->token_num == 1)
 		one_pipe_exec(envp);
 	else

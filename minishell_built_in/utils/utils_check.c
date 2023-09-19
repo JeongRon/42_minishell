@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:32:57 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/09/11 15:19:04 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/19 16:37:32 by jeongrol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,24 @@ int	check_num(char *str)
 		i++;
 	}
 	return (1);
+}
+
+int	check_home(char *envp)
+{
+	if (envp[0] == 'H' && envp[1] == 'O'
+		&& envp[2] == 'M' && envp[3] == 'E'
+		&& envp[4] == '=')
+		return (SUCCESS);
+	return (FAIL);
+}
+
+int	check_path(char *envp)
+{
+	if (envp[0] == 'P' && envp[1] == 'A'
+		&& envp[2] == 'T' && envp[3] == 'H'
+		&& envp[4] == '=' && ft_strlen(envp) != 5)
+		return (SUCCESS);
+	return (FAIL);
 }
 
 int	check_duplicate(char **arr, char *cmd, int flag)

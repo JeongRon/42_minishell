@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   set_env_var.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 14:06:30 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/09/11 20:03:03 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/19 16:37:39 by jeongrol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	check_home(char *envp)
-{
-	if (envp[0] == 'H' && envp[1] == 'O'
-		&& envp[2] == 'M' && envp[3] == 'E'
-		&& envp[4] == '=')
-		return (SUCCESS);
-	return (FAIL);
-}
-
-static int	check_path(char *envp)
-{
-	if (envp[0] == 'P' && envp[1] == 'A'
-		&& envp[2] == 'T' && envp[3] == 'H'
-		&& envp[4] == '=')
-		return (SUCCESS);
-	return (FAIL);
-}
 
 static int	allocate_env_exp(t_env_var *env_var, int cnt)
 {

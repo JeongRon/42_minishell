@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:35:51 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/19 14:08:46 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/19 16:39:28 by jeongrol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ void	infile_make(char **cmd);
 // built_in Folder
 // set_env_var.c
 int		set_env_var(t_env_var *env_var, char **envp);
-int		check_home(char *envp);
 // sort_exp.c
 void	sort_exp(t_env_var *env_var);
 // check_cmd.c
@@ -132,6 +131,8 @@ void	del_exp(char *cmd, t_env_var *env_var);
 // utils_check.c
 int		check_num(char *str);
 int		check_duplicate(char **arr, char *cmd, int flag);
+int		check_home(char *envp);
+int		check_path(char *envp);
 // utils_malloc.c
 char	*key_strdup(char *str);
 char	*ft_exp_strdup(char *src);
@@ -145,6 +146,7 @@ char	*ftj_strjoin(char const *s1, char const *s2);
 // utils_mini.c
 void	ft_free(char **str);
 int		ft_two_strlen(char **str);
+void	update_path(void);
 // split.c
 char	**ftj_split(char const *s, char c);
 #endif
