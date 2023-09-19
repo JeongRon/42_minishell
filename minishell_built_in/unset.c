@@ -6,7 +6,7 @@
 /*   By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 21:23:57 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/19 16:13:02 by jeongrol         ###   ########.fr       */
+/*   Updated: 2023/09/19 16:51:39 by jeongrol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,19 @@ static int	parsing_unset(char *cmd)
 	i = -1;
 	while (cmd[++i])
 	{
-		if (!((65 <= cmd[i] && cmd[i] <= 90) || cmd[i] == 95 \
-		|| (97 <= cmd[i] && cmd[i] <= 122)))
-			return (FAIL);
+		if (i == 0)
+		{
+			if (!((65 <= cmd[i] && cmd[i] <= 90) || cmd[i] == 95 \
+			|| (97 <= cmd[i] && cmd[i] <= 122)))
+				return (FAIL);
+		}
+		else
+		{
+			if (!((65 <= cmd[i] && cmd[i] <= 90) || cmd[i] == 95 \
+			|| (97 <= cmd[i] && cmd[i] <= 122) || ('0' <= cmd[i] \
+			&& cmd[i] <= '9')))
+				return (FAIL);
+		}
 	}
 	return (SUCCESS);
 }
