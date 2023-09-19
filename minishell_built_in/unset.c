@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 21:23:57 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/11 21:24:40 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/19 16:13:02 by jeongrol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	parsing_unset(char *cmd)
+{
+	int	i;
+
+	i = -1;
+	while (cmd[++i])
+	{
+		if (!((65 <= cmd[i] && cmd[i] <= 90) || cmd[i] == 95 \
+		|| (97 <= cmd[i] && cmd[i] <= 122)))
+			return (FAIL);
+	}
+	return (SUCCESS);
+}
 
 int	start_unset(char **cmd, t_env_var *env_var)
 {
@@ -24,8 +38,7 @@ int	start_unset(char **cmd, t_env_var *env_var)
 		infile_make(cmd);
 		while (cmd[++i])
 		{
-			if (!((65 <= cmd[i][0] && cmd[i][0] <= 90) || cmd[i][0] == 95
-				|| (97 <= cmd[i][0] && cmd[i][0] <= 122)))
+			if (parsing_unset(cmd[i]) == FAIL)
 			{
 				ft_putstr_fd("bash: unset: `", 2);
 				ft_putstr_fd(cmd[i], 2);
