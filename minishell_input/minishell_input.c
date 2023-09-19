@@ -6,20 +6,11 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:32:20 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/18 14:07:35 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/18 19:29:18 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-** str을 받아 n만큼 복사해주는 함수
-** envp의 path를 찾기 위해 '='을 뒤에 추가해서 복사해준다.
-** char *
-**
-** @param		src	복사할 문자열의 주소
-** @param		n	복사할 양
-*/
 
 static char	*ft_strdup_path(char *src, int n)
 {
@@ -39,16 +30,6 @@ static char	*ft_strdup_path(char *src, int n)
 	add[++i] = '\0';
 	return (add);
 }
-
-/*
-** 원본 문자열에서 환경변수를 바꾸어서 출력해주는 함수
-** char *
-**
-** @param		str			받은 명령어
-** @param		needele		환경 변수의 원본
-** @param		i			원본 문자열의 환경변수 부분의 시작 지점
-** @param		j			원본 문자열의 환경변수 부분의 끝 지점
-*/
 
 static char	*add_str(char *str, char *needle, int i, int j)
 {
@@ -76,15 +57,6 @@ static char	*add_str(char *str, char *needle, int i, int j)
 	return (temp);
 }
 
-/*
-** 환경변수가 있는지 확인 하는 함수
-** char *
-** 없으면 NULL을 반환
-**
-** @param		str			받은 환경변수 이름
-** @param		envp		환경변수
-*/
-
 char	*find_path(char *str, char **envp)
 {
 	char	*env;
@@ -104,23 +76,13 @@ char	*find_path(char *str, char **envp)
 	return (env);
 }
 
-/*
-** 받은 문자열(명령어)에서 $(환경변수)가 있으면 해석하고 quote를 제거해서 반환하는 함수
-** char *
-**
-** @param		str			받은 명령어
-** @param		envp		환경변수
-*/
-
-char	*quote_conversion(char *s, char**envp)
+char	*quote_conversion(char *s, char**envp, int i)
 {
-	int		i;
 	int		j;
 	int		quote;
 	char	*needle;
 	char	*temp;
 
-	i = -1;
 	quote = 0;
 	while (s[++i])
 	{
@@ -130,7 +92,8 @@ char	*quote_conversion(char *s, char**envp)
 		s[i + 1] == ' ' || s[i + 1] == '$' || s[i + 1] == '\"'))
 		{
 			j = i + 1;
-			while (!(!(s[j]) || s[j] == ' ' || s[j] == '$' || s[j] == '\"'))
+			while (!(!(s[j]) || s[j] == ' ' || s[j] == '$' \
+			|| s[j] == '\"' || s[j] == '\''))
 				j++;
 			needle = ft_strdup_path(&s[i + 1], j - i - 1);
 			needle = find_path(needle, envp);
@@ -140,16 +103,6 @@ char	*quote_conversion(char *s, char**envp)
 	}
 	return (del_quote(s));
 }
-
-/*
-** 받은 문자열(명령어)을 token으로 바꾸어서 t_minishell의 token에 할당해주는 함수
-** void
-**
-** @param		minishell	minishell을 구성하는 구조체
-							token의 정보를 저장하는 곳.
-** @param		str			받은 명령어
-** @param		envp		환경변수
-*/
 
 void	parse_input(t_minishell *minishell, char *str, char **envp)
 {

@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 18:01:27 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/18 16:21:45 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/19 15:46:50 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,64 @@ static void	one_pipe_exec(char **env)
 	wait_child();
 }
 
+static void	here_doc_read(int infile, char **str)
+{
+	char	*tmp;
+
+	tmp = readline("here_doc> ");
+	while (1)
+	{
+		if (!tmp || (!ft_strncmp(str[1], tmp, ft_strlen(str[1])) \
+		&& !ft_strncmp(str[1], tmp, ft_strlen(tmp))))
+			break ;
+		write(infile, tmp, ft_strlen(tmp));
+		write(infile, "\n", 1);
+		free(tmp);
+		tmp = readline("here_doc> ");
+	}
+	if (tmp)
+		free(tmp);
+}
+
+static void	here_doc_count(char **str)
+{
+	int		infile;
+	char	*tmp;
+	char	*tmp2;
+
+	if (!ft_strncmp(str[0], "<<", 3))
+	{
+		setting_signal(3, 2);
+		g_minishell->here_doc_count++;
+		tmp = ft_itoa(g_minishell->here_doc_count);
+		tmp2 = ft_strjoin("/tmp/minishell_here_doc", tmp);
+		free(tmp);
+		tmp = ft_strjoin(tmp2, ".txt");
+		free(tmp2);
+		infile = open(tmp, O_WRONLY | O_TRUNC | O_CREAT, 0600);
+		if (infile == -1)
+			ft_error("System error(here_doc)");
+		free(tmp);
+		here_doc_read(infile, str);
+		close(infile);
+		setting_signal(2, 2);
+	}
+}
+
 int	excute_token(char **envp)
 {
+	int	i;
+	int	j;
+
+	i = -1;
+	g_minishell->here_doc_count = 0;
+	while (++i < g_minishell->token_num)
+	{
+		j = -1;
+		while (g_minishell->token[i].redirection[++j])
+			here_doc_count(g_minishell->token[i].redirection[j]);
+	}
+	g_minishell->here_doc_count = 0;
 	if (g_minishell->token_num == 1)
 		one_pipe_exec(envp);
 	else

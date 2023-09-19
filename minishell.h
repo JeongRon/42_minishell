@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:35:51 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/11 20:19:24 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/19 14:08:46 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_minishell
 	char		**history;
 	int			token_num;
 	int			exit_code;
+	int			here_doc_count;
 	t_token		*token;
 	pid_t		*pid;
 	t_env_var	env_var;
@@ -71,7 +72,7 @@ int		filepath_search(char **cmd2, char *cmd, char *filepath);
 int		check_cmd2(char **cmd, t_env_var *env_var);
 char	*del_quote(char *str);
 char	*find_path(char *str, char **envp);
-char	*quote_conversion(char *str, char**envp);
+char	*quote_conversion(char *str, char**envp, int i);
 char	*get_next_line(int fd);
 void	free_all(char *a, char *b);
 char	*gnl_strjoin(char *buff, char *tmp, int tmp_len);

@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 16:08:27 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/09/11 20:48:04 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/18 16:51:33 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	print_env(t_env_var *env_var)
 	}
 }
 
-// env ->> 에러 코드 리턴
 int	start_env(char **cmd, t_env_var *env_var)
 {
 	int	cmd_cnt;

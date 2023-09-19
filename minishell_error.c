@@ -6,18 +6,11 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 15:56:16 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/11 20:19:35 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/18 16:53:51 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-** 에러시 실행되는 코드 및 종료
-** void
-**
-** @param		str	실패시 종료에 출력할 문자열
-*/
 
 void	error(char *str, int flag)
 {

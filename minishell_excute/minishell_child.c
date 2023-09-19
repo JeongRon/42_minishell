@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:12:56 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/09/18 16:18:45 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/19 14:56:41 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,19 @@ static void	last_child_process(char **env, int i, int *fd, int *pre_pipe)
 
 void	child_process(int i, char **env, int fd[], int pre_pipe[])
 {
+	int	k;
+	int	j;
+
+	k = -1;
+	while (++k < i)
+	{
+		j = -1;
+		while (g_minishell->token[k].redirection[++j])
+		{
+			if (!ft_strncmp(g_minishell->token[k].redirection[j][0], "<<", 3))
+				g_minishell->here_doc_count++;
+		}
+	}
 	if (i == 0)
 		first_child_process(env, fd);
 	else if (i == g_minishell->token_num - 1)

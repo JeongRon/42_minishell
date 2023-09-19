@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 20:29:18 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/09/08 20:05:59 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/19 15:42:35 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	wait_child(void)
 			else if (signo == SIGQUIT && i++ == 0)
 				ft_putstr_fd("^\\Quit: 3\n", STDERR_FILENO);
 			g_minishell->exit_code = 128 + signo;
+			if (signo == SIGSEGV && i++ == 0)
+				g_minishell->exit_code = 0;
 		}
 		else
 			g_minishell->exit_code = WEXITSTATUS(status);

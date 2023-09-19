@@ -6,13 +6,12 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 14:15:21 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/09/12 18:09:06 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/18 16:59:50 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// 정렬 안된 맨 왼쪽 인덱스 catch해서 리턴
 static int	catch_exp_index(t_env_var *env_var)
 {
 	int	catch;
@@ -37,7 +36,6 @@ static int	catch_exp_index(t_env_var *env_var)
 	return (catch);
 }
 
-// 선택 정렬
 void	sort_exp(t_env_var *env_var)
 {
 	char	**exp_tmp;

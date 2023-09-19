@@ -6,18 +6,11 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:40:13 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/18 15:33:26 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/18 20:45:29 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-** 말록 선언을 하는 함수 / 실패시 에러로 종료된다.
-** void
-**
-** @param		size	할당할 크기
-*/
 
 void	*ft_malloc(size_t size)
 {
@@ -77,7 +70,7 @@ void	switch_exit_code(void)
 	int		infile;
 	int		i;
 
-	infile = open("builtin_file.txt", O_RDONLY, 0600);
+	infile = open("/tmp/builtin_file.txt", O_RDONLY, 0600);
 	if (infile != -1)
 	{
 		i = 0;
@@ -85,7 +78,7 @@ void	switch_exit_code(void)
 		while (temp2[i])
 			temp2[++i] = get_next_line(infile);
 		close(infile);
-		unlink("builtin_file.txt");
+		unlink("/tmp/builtin_file.txt");
 		g_minishell->exit_code = check_cmd2(temp2, &g_minishell->env_var);
 		infile = -1;
 		while (temp2[++infile])

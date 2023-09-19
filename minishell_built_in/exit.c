@@ -6,13 +6,12 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:09:21 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/09/18 13:36:31 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/18 16:55:46 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// long long 범위 넘으면 리턴 1, 범위 안이면 리턴 0
 static int	is_out_of_range(char *cmd, int ch_flag)
 {
 	int			ch_len;
@@ -63,7 +62,6 @@ static long long	ftj_atoi(const char *str)
 	return (sign * value);
 }
 
-// 숫자가 long long 범위 밖일 시 256 리턴, 아니면 exit 인자에 맞게 리턴
 static int	get_exit_status(char *cmd)
 {
 	int			status;
@@ -137,7 +135,7 @@ int	start_exit(char **cmd)
 				return (print_exit_code(-1, cmd));
 			if (cnt == 2)
 				return (print_exit_code(-1, cmd));
-			else 
+			else
 				return (print_exit_code(1, cmd));
 		}
 		else

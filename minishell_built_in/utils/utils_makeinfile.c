@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 18:04:29 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/18 15:13:04 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/18 20:32:53 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	infile_make(char **cmd)
 
 	if (g_minishell->token_num != 1)
 		return ;
-	infile = open("builtin_file.txt", O_WRONLY | O_TRUNC | O_CREAT, 0600);
+	infile = open("/tmp/builtin_file.txt", O_WRONLY | O_TRUNC | O_CREAT, 0600);
 	if (infile == -1)
 		ft_error("Infile Open Error");
 	i = -1;

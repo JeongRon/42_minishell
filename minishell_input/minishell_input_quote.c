@@ -6,20 +6,12 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 20:35:30 by dongmiki          #+#    #+#             */
-/*   Updated: 2023/09/12 15:25:59 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/18 16:52:36 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-** 받은 문자열을 확인하면서 quote가 제대로 닫혔는지 확인하는 함수.
-** void
-**
-** @param		str		입력받은 명령어(문자열)
-** @param		i		문자열의 시작 위치 default(0)
-** @param		quote	quote가 제대로 닫혔는지 확인해주는 flag
-*/
 static void	find_quote(char *str, int i, int *quote)
 {
 	while (str[++i])
@@ -97,14 +89,6 @@ static void	distinguish_redirection_count(char *str, int *i, int *j, int *flag)
 		*flag = 0;
 }
 
-/*
-** str에 있는 redirection을 구분해서 ' '으로 구분해주는 함수
-** char *
-** 나누어진 문자열을 만들어서 리턴
-**
-** @param		str		입력받은 명령어(문자열)
-** @value		flag	redirection이 중복되어서 나오는지 확인하는 변수
-*/
 static char	*distinguish_redirection(char *str, int i, int j, int quote)
 {
 	int		flag;
@@ -118,14 +102,6 @@ static char	*distinguish_redirection(char *str, int i, int j, int quote)
 	}
 	return (distinguish_redirection_part2(-1, j + i, str, quote));
 }
-
-/*
-** quote가 제대로 닫쳤는지 확인하고 redirection을 구분해주고 '|' 단위로 나누어 주는 함수
-** char **
-** '|'단위로 나누어진 이중 문자열을 리턴한다.
-**
-** @param		str		입력받은 명령어(문자열)
-*/
 
 char	**continue_quote(char *str)
 {

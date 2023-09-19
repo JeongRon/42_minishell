@@ -6,7 +6,7 @@
 /*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:02:40 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/09/11 20:51:25 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/18 16:56:27 by dongmiki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	print_echo(char **cmd, int opt, int index)
 		printf("\n");
 }
 
-// -n 옵션이면 1 리턴, -n 옵션 아니면 0리턴
 static int	search_option(char *cmd)
 {
 	int	i;
@@ -56,7 +55,6 @@ static int	search_option(char *cmd)
 	return (return_flag);
 }
 
-// 해당 cmd 에서 -n 옵션 확인 + echo 시작 인덱스 값 가져오기
 static void	search_echo_flag(char **cmd, int *opt, int *start)
 {
 	int	i;
