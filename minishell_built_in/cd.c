@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 14:44:05 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/09/11 21:18:02 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/21 18:28:50 by jeongrol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static char	*get_pwd_line(int flag)
 		line = ft_strjoin("OLDPWD=", value);
 	else if (flag == 1)
 		line = ft_strjoin("PWD=", value);
+	free(value);
 	if (!line)
 		perror("MALLOC");
 	return (line);
