@@ -6,7 +6,7 @@
 /*   By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 14:06:30 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/09/19 16:37:39 by jeongrol         ###   ########.fr       */
+/*   Updated: 2023/09/21 14:19:51 by jeongrol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	set_env_var(t_env_var *env_var, char **envp)
 	env_var->env_cnt = env_cnt;
 	env_var->exp_cnt = env_cnt;
 	env_var->status = 0;
-	del_exp("$?", env_var);
+	del_exp("?", env_var);
 	sort_exp(env_var);
 	add_exp("OLDPWD", env_var);
 	return (1);

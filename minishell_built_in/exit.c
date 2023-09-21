@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:09:21 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/09/18 16:55:46 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/21 14:38:13 by jeongrol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static int	print_exit_code(int status, char **cmd)
 	if (status == 1)
 	{
 		ft_putstr_fd("bash: exit: too many arguments\n", 2);
-		return (1);
+		return (256);
 	}
 	else if (status == 255)
 	{

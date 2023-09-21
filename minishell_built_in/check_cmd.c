@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongmiki <dongmiki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 16:21:25 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/09/18 15:32:49 by dongmiki         ###   ########.fr       */
+/*   Updated: 2023/09/21 14:38:33 by jeongrol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	check_cmd2(char **cmd, t_env_var *env_var)
 	{
 		tmp_num = start_exit(cmd);
 		if (tmp_num == 256)
-			return (tmp_num);
+			return (1);
 		exit(tmp_num);
 	}
 	else if (ftj_strcmp(cmd[0], "cd") == 0)
